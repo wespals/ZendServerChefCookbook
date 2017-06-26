@@ -39,7 +39,7 @@ when "debian"
     components ['nginx']
     distribution node['lsb']['codename']
     key "http://nginx.org/keys/nginx_signing.key"
-    only_if { node[:zendserver][:nginx] }
+    only_if { node[:zendserver][:nginx] && node[:zendserver][:version].to_f < 9.0 }
   end
 
 when "rhel"
@@ -62,7 +62,7 @@ when "rhel"
     description "Nginx repo"
     gpgkey "http://nginx.org/keys/nginx_signing.key"
     url "http://nginx.org/packages/#{node['platform']}/#{node['platform_version'].split('.')[0]}/$basearch/" 
-    only_if { node[:zendserver][:nginx] }
+    only_if { node[:zendserver][:nginx] && node[:zendserver][:version].to_f < 9.0 }
   end
 
   directory "/etc/httpd/conf.d" do
